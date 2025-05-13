@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "init-db": "node database/init.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -13,7 +14,10 @@
     "dotenv": "^16.5.0",
     "env": "^0.0.2",
     "express": "~4.16.1",
-    "morgan": "~1.9.1"
+    "mongodb": "^6.16.0",
+    "mongoose": "^8.14.3",
+    "morgan": "~1.9.1",
+    "pg": "^8.16.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.26.0",
