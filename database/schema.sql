@@ -76,9 +76,25 @@ END;
 $$ LANGUAGE plpgsql;
 
 
--- Trigger to call the set_renewal_date function automatically
--- before inserting or updating a row in the subscriptions table
+Trigger to call the set_renewal_date function automatically
+before inserting or updating a row in the subscriptions table
 CREATE TRIGGER trigger_set_renewal_date
 BEFORE INSERT OR UPDATE ON subscriptions
 FOR EACH ROW
 EXECUTE FUNCTION set_renewal_date()
+
+CREATE OR REPLACE FUNCTION set_status()
+RETURNS TRIGGER AS $$
+BEGIN   
+    IF (NEW.renewal_date < CURRENT_DATE) THEN
+        NEW.status := 'expired';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER trigger_set_status
+BEFORE INSERT OR UPDATE ON subscriptions
+FOR EACH ROW
+EXECUTE FUNCTION set_status();
