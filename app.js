@@ -9,13 +9,15 @@ import connectToDatabase from './database/mongodb.js';
 // import connectToPostgres from './database/postgres.js';
 import errorMiddleware from './middlewares/error.middleware.js';
 import cookieParser from 'cookie-parser';
+import arcjetMiddleware from './middlewares/arcjet.middleware.js';
 
 
 const app = express(); // creating an express app instance - actual web server
 
 app.use(express.json()); // handle json data sent in request 
 app.use(express.urlencoded({extend : false})); // process the form data sent via HTML forms in simple format
-app.use(cookieParser()); // 
+app.use(cookieParser()); 
+app.use(arcjetMiddleware);
 
 app.use('/api/v1/auth', authRouter); // use which api 
 app.use('/api/v1/users', userRouter);
