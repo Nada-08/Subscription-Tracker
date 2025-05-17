@@ -63,3 +63,5 @@ typings/
 
 database/postgres.js
 database/schema.sql
+
+.dummay data.txt
