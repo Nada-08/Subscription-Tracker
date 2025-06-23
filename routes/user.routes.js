@@ -1,18 +1,19 @@
 import { Router } from 'express';
 
 import authorize from '../middlewares/auth.middleware.js';
-import { getUser, getUsers } from '../controllers/user.controller.js';
+import { createUser, deleteUser, getUser, getUsers, updateUser } from '../controllers/user.controller.js';
+import isAdmin from '../middlewares/role.middleware.js';
 
 const userRouter = Router();
 
-userRouter.get('/', getUsers);
+userRouter.get('/', authorize, isAdmin, getUsers); // for admin only
 
 userRouter.get('/:id', authorize, getUser); // :id is a dynamic parameter
 
-userRouter.post('/', (req, res) => res.send({ title: 'CREATE new user' }));
+userRouter.post('/', authorize, isAdmin, createUser); // for admin 
 
-userRouter.put('/:id', (req, res) => res.send({ title: 'UPDATE user' }));
+userRouter.put('/:id', authorize, updateUser);
 
-userRouter.delete('/:id', (req, res) => res.send({ title: 'DELETE user' }));
+userRouter.delete('/:id', authorize, deleteUser);
 
 export default userRouter;
