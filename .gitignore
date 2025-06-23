@@ -63,6 +63,6 @@ backend/.env.*.local
 
 backend/database/postgres.js
 backend/database/schema.sql
-backend/database/init.sql
+backend/database/init.js
 
 backend/.dummay data.txt
