@@ -55,13 +55,13 @@ typings/
 .yarn-integrity
 
 # dotenv environment variables file
-.env
-.env.*.local
+backend/.env
+backend/.env.*.local
 
 # next.js build output
 .next
 
-database/postgres.js
-database/schema.sql
+backend/database/postgres.js
+backend/database/schema.sql
 
-.dummay data.txt
+backend/.dummay data.txt

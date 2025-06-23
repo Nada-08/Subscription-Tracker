@@ -26,7 +26,7 @@ export const signUp = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUsers = await User.create(
-      [{ name, email, password: hashedPassword, role: role || 'user'}],
+      [{ name, email, password: hashedPassword, role: role || "user" }],
       { session }
     );
 
@@ -90,4 +90,19 @@ export const signIn = async (req, res, next) => {
   }
 };
 
-export const signOut = async (req, res, next) => {};
+export const signOut = async (req, res, next) => {
+  try {
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "User signed out successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
