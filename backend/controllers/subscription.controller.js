@@ -125,6 +125,8 @@ export const getUserSubscription = async (req, res, next) => {
 
     const subscriptions = await Subscription.find({ user: req.params.id });
 
+    console.log("HEREEEEEEEE");
+    console.log(subscriptions);
     res.status(200).json({ success: true, data: subscriptions });
   } catch (error) {
     next(error);
