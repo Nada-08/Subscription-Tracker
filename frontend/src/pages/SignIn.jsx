@@ -25,13 +25,10 @@ const SignIn = () => {
         alert(jsonRes.message || "Sign in failed");
         return;
       }
-      console.log("User", JSON.stringify(jsonRes.user));
 
       localStorage.setItem("token", jsonRes.data.token);
       localStorage.setItem("user", JSON.stringify(jsonRes.data.user));
-
-      console.log("SignIn response:", jsonRes);
-      console.log("Local Storage User: ", localStorage.getItem("user"));
+      
       navigate("/dashboard");
     } catch (error) {
       console.error(error);

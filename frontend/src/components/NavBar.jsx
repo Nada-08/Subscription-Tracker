@@ -22,13 +22,13 @@ const NavBar = () => {
       <div className="flex gap-6 items-center">
         {isAuthenticated && (
           <>
-            <Link to="/dashboard" className="hover:text-gray-300">
+            {/* <Link to="/dashboard" className="hover:text-gray-300">
               My Subscriptions
             </Link>
 
             <Link to="/upcoming-renewals" className="hover:text-gray-300">
               Upcoming Renewals
-            </Link>
+            </Link> */}
             <button
               onClick={handleLogout}
               className="bg-amber-500 px-3 py-1 rounded hover:bg-amber-600"

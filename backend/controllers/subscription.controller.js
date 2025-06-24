@@ -66,14 +66,8 @@ export const updateSubscription = async (req, res, next) => {
         .json({ success: false, message: "Subscription not found." });
     }
 
-    const updatedSubscription = await Subscription.findByIdAndUpdate(
-      id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    Object.assign(subscription, req.body);
+    const updatedSubscription =  await subscription.save(); 
 
     if (req.body.renewalDate || req.body.frequency) {
       await workflowClient.trigger({
@@ -125,8 +119,6 @@ export const getUserSubscription = async (req, res, next) => {
 
     const subscriptions = await Subscription.find({ user: req.params.id });
 
-    console.log("HEREEEEEEEE");
-    console.log(subscriptions);
     res.status(200).json({ success: true, data: subscriptions });
   } catch (error) {
     next(error);

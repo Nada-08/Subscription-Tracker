@@ -1,16 +1,18 @@
-import React, { useRef, useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
+import axios from "axios";
 
-const EditSubscription = ({ subscription, onClose, onUpdate }) => {
-  const formatDateForInput = (date) => {
-    if (!date) return "";
-    const d = new Date(date);
-    const year = d.getFullYear();
-    const month = (d.getMonth() + 1).toString().padStart(2, "0");
-    const day = d.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
+const AddSubscription = ({ onClose, onAdd }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    price: "",
+    renewalDate: "",
+    frequency: "",
+    status: "",
+    category: "",
+    paymentMethod: "",
+    currency: "",
+  });
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -26,65 +28,41 @@ const EditSubscription = ({ subscription, onClose, onUpdate }) => {
     };
   }, [onClose]);
 
-  const [formData, setFormData] = useState({
-    name: subscription.name,
-    price: subscription.price,
-    renewalDate: formatDateForInput(subscription.renewalDate),
-    frequency: subscription.frequency,
-    status: subscription.status,
-    category: subscription.category,
-    paymentMethod: subscription.paymentMethod,
-    currency: subscription.currency || "EGP",
-    startDate: subscription.startDate,
-  });
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
-
-  const getChangedFields = (original, updated) => {
-    const changed = {};
-
-    for (let key in updated) {
-      const originalValue = original[key];
-      const updatedValue = updated[key];
-
-      const isDateField = key === "renewalDate" || key === "startDate";
-
-      const isDifferent = isDateField
-        ? new Date(originalValue).toISOString().slice(0, 10) !==
-          new Date(updatedValue).toISOString().slice(0, 10)
-        : originalValue !== updatedValue;
-      if (isDifferent) {
-        changed[key] = isDateField ? new Date(updatedValue) : updatedValue;
-      }
-    }
-    return changed;
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError("");
+
+    // Conditional validation
+    if (!formData.name || !formData.price || !formData.currency) {
+      setError("Please fill in all required fields.");
+      return;
+    }
+
+    if (!formData.renewalDate && !formData.frequency) {
+      setError("Either Renewal Date or Frequency must be provided.");
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const token = localStorage.getItem("token");
 
-      const payload = getChangedFields(subscription, formData);
+      const payload = {
+        ...formData,
+        price: parseFloat(formData.price),
+      };
 
-      console.log("Payload", payload);
-
-      if (Object.keys(payload).length === 0) {
-        setError("No changes detected.");
-        setLoading(false);
-        return;
-      }
-
-      const res = await axios.put(
-        `http://localhost:5500/api/v1/subscriptions/${subscription._id}`,
+      const res = await axios.post(
+        `http://localhost:5500/api/v1/subscriptions`,
         payload,
         {
           headers: {
@@ -92,15 +70,14 @@ const EditSubscription = ({ subscription, onClose, onUpdate }) => {
           },
         }
       );
-
-      if (res.status == 200) {
-        onUpdate(res.data.data);
+      if (res.status == 201) {
+        onAdd(res.data.data);
         onClose();
       } else {
         setError("Failed to update subscription");
       }
-    } catch (error) {
-      setError(error.response?.data?.message || "Error updating subscription");
+    } catch (err) {
+      setError(err.response?.data?.message || "Error adding subscription.");
     } finally {
       setLoading(false);
     }
@@ -123,7 +100,7 @@ const EditSubscription = ({ subscription, onClose, onUpdate }) => {
       >
         <h2 className="text-2xl font-bold mb-4 text-white">
           {" "}
-          Edit Subscription
+          Add Subscription
         </h2>
 
         {error && <p className="text-red-500 mb-4">{error}</p>}
@@ -157,21 +134,40 @@ const EditSubscription = ({ subscription, onClose, onUpdate }) => {
             onChange={handleChange}
             className="w-1/3 p-2 rounded bg-gray-700 text-white"
           >
+            <option value="currency">Currency</option>
             <option value="EGP">EGP</option>
             <option value="USD">USD</option>
             <option value="EUR">EUR</option>
           </select>
         </div>
 
-        <input
-          type="date"
-          name="renewalDate"
-          placeholder="Next Renewal Date"
-          value={formData.renewalDate}
-          onChange={handleChange}
-          className="w-full mb-3 p-2 rounded bg-gray-700 text-white"
-          required
-        />
+        <div className="flex gap-3 mb-3">
+          <div className="w-1/2">
+            <label className="block text-sm text-gray-300 mb-1">
+              From (Start Date)
+            </label>
+            <input
+              type="date"
+              name="startDate"
+              value={formData.startDate}
+              onChange={handleChange}
+              className="w-full p-2 rounded bg-gray-700 text-white"
+            />
+          </div>
+
+          <div className="w-1/2">
+            <label className="block text-sm text-gray-300 mb-1">
+              To (Renewal Date)
+            </label>
+            <input
+              type="date"
+              name="renewalDate"
+              value={formData.renewalDate}
+              onChange={handleChange}
+              className="w-full p-2 rounded bg-gray-700 text-white"
+            />
+          </div>
+        </div>
 
         <select
           name="frequency"
@@ -194,6 +190,7 @@ const EditSubscription = ({ subscription, onClose, onUpdate }) => {
           onChange={handleChange}
           className="w-full mb-3 p-2 rounded bg-gray-700 text-white"
         >
+          <option value="active">Status</option>
           <option value="active">Active</option>
           <option value="cancelled">Cancelled</option>
           <option value="expired">Expired</option>
@@ -205,6 +202,7 @@ const EditSubscription = ({ subscription, onClose, onUpdate }) => {
           onChange={handleChange}
           className="w-full mb-3 p-2 rounded bg-gray-700 text-white"
         >
+          <option value="category">Category</option>
           {[
             "sports",
             "news",
@@ -227,6 +225,7 @@ const EditSubscription = ({ subscription, onClose, onUpdate }) => {
           onChange={handleChange}
           className="w-full mb-3 p-2 rounded bg-gray-700 text-white"
         >
+          <option value="paymentMethod">Payment Method</option>
           {["Credit Card", "PayPal", "Bank Transfer", "Cash"].map((method) => (
             <option key={method} value={method}>
               {method}
@@ -256,4 +255,4 @@ const EditSubscription = ({ subscription, onClose, onUpdate }) => {
   );
 };
 
-export default EditSubscription;
+export default AddSubscription;

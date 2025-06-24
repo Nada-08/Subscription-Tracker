@@ -9,62 +9,62 @@ export const generateEmailTemplate = ({
     supportLink,
     daysLeft,
 }) => `
-<div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 0; background-color: #f4f7fa;">
-    <table cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+<div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #f6f9fc; color: #333; max-width: 640px; margin: 0 auto; padding: 0;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); background: #fff;">
         <tr>
-            <td style="background-color: #4a90e2; text-align: center;">
-                <p style="font-size: 54px; line-height: 54px; font-weight: 800;">SubDub</p>
+            <td style="background: linear-gradient(90deg, #667eea, #764ba2); text-align: center; padding: 30px 0;">
+                <h1 style="color: #fff; margin: 0; font-size: 36px;">🔔 SubTrackt</h1>
+                <p style="color: #e3eaf5; font-size: 16px; margin-top: 5px;">Never miss a renewal again</p>
             </td>
         </tr>
         <tr>
-            <td style="padding: 40px 30px;">                
-                <p style="font-size: 16px; margin-bottom: 25px;">Hello <strong style="color: #4a90e2;">${userName}</strong>,</p>
-                
-                <p style="font-size: 16px; margin-bottom: 25px;">Your <strong>${subscriptionName}</strong> subscription is set to renew on <strong style="color: #4a90e2;">${renewalDate}</strong> (${daysLeft} days from today).</p>
-                
-                <table cellpadding="15" cellspacing="0" border="0" width="100%" style="background-color: #f0f7ff; border-radius: 10px; margin-bottom: 25px;">
+            <td style="padding: 40px 30px;">
+                <p style="font-size: 18px; margin-bottom: 20px;">Hey <strong style="color: #4a90e2;">${userName}</strong> 👋,</p>
+
+                <p style="font-size: 16px; margin-bottom: 25px;">
+                    Your <strong>${subscriptionName}</strong> subscription is scheduled to renew on 
+                    <strong style="color: #4a90e2;">${renewalDate}</strong> – that’s just <strong>${daysLeft} day${daysLeft > 1 ? "s" : ""}</strong> away!
+                </p>
+
+                <table cellpadding="12" cellspacing="0" width="100%" style="background-color: #f4f7fb; border-radius: 10px; margin-bottom: 25px;">
                     <tr>
-                        <td style="font-size: 16px; border-bottom: 1px solid #d0e3ff;">
-                            <strong>Plan:</strong> ${planName}
-                        </td>
+                        <td style="font-size: 15px;"><strong>🧾 Plan:</strong> ${planName}</td>
                     </tr>
                     <tr>
-                        <td style="font-size: 16px; border-bottom: 1px solid #d0e3ff;">
-                            <strong>Price:</strong> ${price}
-                        </td>
+                        <td style="font-size: 15px;"><strong>💰 Price:</strong> ${price}</td>
                     </tr>
                     <tr>
-                        <td style="font-size: 16px;">
-                            <strong>Payment Method:</strong> ${paymentMethod}
-                        </td>
+                        <td style="font-size: 15px;"><strong>💳 Payment Method:</strong> ${paymentMethod}</td>
                     </tr>
                 </table>
-                
-                <p style="font-size: 16px; margin-bottom: 25px;">If you'd like to make changes or cancel your subscription, please visit your <a href="${accountSettingsLink}" style="color: #4a90e2; text-decoration: none;">account settings</a> before the renewal date.</p>
-                
-                <p style="font-size: 16px; margin-top: 30px;">Need help? <a href="${supportLink}" style="color: #4a90e2; text-decoration: none;">Contact our support team</a> anytime.</p>
-                
-                <p style="font-size: 16px; margin-top: 30px;">
-                    Best regards,<br>
-                    <strong>The SubDub Team</strong>
+
+                <a href="${accountSettingsLink}" style="display: inline-block; padding: 12px 24px; background: #667eea; color: white; text-decoration: none; border-radius: 6px; font-weight: 500; margin-bottom: 30px;">
+                    ⚙️ Manage Your Subscription
+                </a>
+
+                <p style="font-size: 15px; margin-top: 30px;">
+                    Need help or have questions? <a href="${supportLink}" style="color: #667eea; text-decoration: underline;">Contact our support team</a> anytime.
+                </p>
+
+                <p style="font-size: 15px; margin-top: 30px;">
+                    Stay awesome ✨,<br>
+                    <strong>The SubTrackt Team</strong>
                 </p>
             </td>
         </tr>
         <tr>
-            <td style="background-color: #f0f7ff; padding: 20px; text-align: center; font-size: 14px;">
-                <p style="margin: 0 0 10px;">
-                    SubDub Inc. | 123 Main St, Anytown, AN 12345
-                </p>
+            <td style="background-color: #eef2f7; text-align: center; padding: 20px; font-size: 13px; color: #666;">
+                <p style="margin-bottom: 10px;">SubTrackt Inc. • 123 Main St, Anytown, USA</p>
                 <p style="margin: 0;">
-                    <a href="#" style="color: #4a90e2; text-decoration: none; margin: 0 10px;">Unsubscribe</a> | 
-                    <a href="#" style="color: #4a90e2; text-decoration: none; margin: 0 10px;">Privacy Policy</a> | 
-                    <a href="#" style="color: #4a90e2; text-decoration: none; margin: 0 10px;">Terms of Service</a>
+                    <a href="#" style="color: #667eea; margin: 0 10px; text-decoration: none;">Unsubscribe</a> |
+                    <a href="#" style="color: #667eea; margin: 0 10px; text-decoration: none;">Privacy Policy</a>
                 </p>
             </td>
         </tr>
     </table>
 </div>
 `;
+
 
 export const emailTemplates = [
     {

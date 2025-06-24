@@ -8,6 +8,8 @@ import SignIn from "./pages/SignIn.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 
 const App = () => {
+  console.log("app is rendering");
+
   return (
     <div className="min-h-screen  bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white scroll-smooth">
       <Router>
