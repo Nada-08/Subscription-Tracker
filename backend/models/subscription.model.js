@@ -46,17 +46,17 @@ const subscriptionSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["active", "cancelled", "expired"],
+      enum: ["active", "cancelled", "expired", "upcoming"],
       default: "active",
     },
 
     startDate: {
       type: Date,
       required: true,
-      validate: {
-        validator: (value) => value <= new Date(),
-        message: "Start date my be in the past",
-      },
+      // validate: {
+      //   validator: (value) => value <= new Date(),
+      //   message: "Start date my be in the past",
+      // },
     },
 
     renewalDate: {

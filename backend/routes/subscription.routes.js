@@ -6,7 +6,9 @@ import * as SubscriptionController from '../controllers/subscription.controller.
 const subscriptionRouter = Router();
 
 // Specific Routes
+subscriptionRouter.get('/user/:id/filter', authorize, SubscriptionController.getFilteredUserSubscriptions);
 subscriptionRouter.get('/upcoming-renewals', authorize, SubscriptionController.getUpcomingRenewals);
+
 
 subscriptionRouter.get('/user/:id', authorize, SubscriptionController.getUserSubscription);
 
@@ -24,5 +26,6 @@ subscriptionRouter.post('/', authorize, SubscriptionController.createSubscriptio
 subscriptionRouter.put('/:id', authorize, SubscriptionController.updateSubscription);
 
 subscriptionRouter.delete('/:id', authorize, SubscriptionController.deleteSubscription);
+
 
 export default subscriptionRouter;

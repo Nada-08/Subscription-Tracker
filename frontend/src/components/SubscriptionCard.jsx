@@ -62,7 +62,7 @@ const SubscriptionCard = ({ subscription, onUpdate, onDelete }) => {
           <p className="text-sm text-gray-400 space-y-1">
             <span className="block">Amount: {subscription.price}</span>
             <span className="block">
-              Next renewal:{" "}
+              Renewal Date:{" "}
               {new Date(subscription.renewalDate).toLocaleDateString()}
             </span>
           </p>

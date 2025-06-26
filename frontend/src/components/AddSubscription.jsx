@@ -190,10 +190,11 @@ const AddSubscription = ({ onClose, onAdd }) => {
           onChange={handleChange}
           className="w-full mb-3 p-2 rounded bg-gray-700 text-white"
         >
-          <option value="active">Status</option>
+          <option value="status">Status</option>
           <option value="active">Active</option>
           <option value="cancelled">Cancelled</option>
           <option value="expired">Expired</option>
+          <option value="upcoming">Upcoming</option>
         </select>
 
         <select

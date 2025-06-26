@@ -197,6 +197,7 @@ const EditSubscription = ({ subscription, onClose, onUpdate }) => {
           <option value="active">Active</option>
           <option value="cancelled">Cancelled</option>
           <option value="expired">Expired</option>
+          <option value="upcoming">Upcoming</option>
         </select>
 
         <select

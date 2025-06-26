@@ -3,6 +3,8 @@ import { PlusIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 import SubscriptionCard from "../components/SubscriptionCard";
 import AddSubscription from "../components/AddSubscription";
+import FilterBar from "../components/FilterBar";
+import SubscriptionChart from "../components/SubscriptionChart";
 
 const Dashboard = () => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -16,10 +18,7 @@ const Dashboard = () => {
 
     if (!token || !storedUser) return;
 
-    console.log("Raw user from localStorage:", storedUser);
-
     const parsedUser = JSON.parse(storedUser);
-    console.log("Parsed user:", parsedUser);
 
     setUser(parsedUser);
 
@@ -60,6 +59,41 @@ const Dashboard = () => {
     setSubscriptions((subs) => [addedSub, ...subs]);
   };
 
+  const fetchFilteredSubscriptions = async (filters = {}) => {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    if (!token || !user) return;
+
+    const parsedUser = JSON.parse(user);
+    const query = new URLSearchParams(filters).toString();
+
+    console.log(parsedUser._id);
+
+    try {
+      const res = await axios.get(
+        `http://localhost:5500/api/v1/subscriptions/user/${parsedUser._id}/filter?${query}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setSubscriptions(res.data.data || []);
+    } catch (error) {
+      console.error("Error filtering subscriptions", error);
+    }
+  };
+
+  const spendingByCategory = subscriptions.reduce((acc, sub) => {
+    const cat = sub.category || "uncategorized";
+    acc[cat] = (acc[cat] || 0) + sub.price;
+    return acc;
+  }, {});
+
+  const chartData = Object.entries(spendingByCategory).map(
+    ([category, cost]) => ({ category, cost })
+  );
+
   return (
     <div className="text-white p-8 min-h-[calc(100vh-64px)]">
       <h1 className="text-3xl font-bold mb-4">Welcome, {user?.name}</h1>
@@ -90,6 +124,10 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
+
+      <FilterBar onFilter={fetchFilteredSubscriptions} />
+
+      <SubscriptionChart data={chartData}/>
 
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
         {filteredSubscriptions.length > 0 ? (

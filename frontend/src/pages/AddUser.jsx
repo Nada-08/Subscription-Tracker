@@ -1,17 +1,18 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
-const SignUp = () => {
+const AddUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("user");
   const [errors, setErrors] = useState({
     name: "",
     email: "",
     password: "",
+    role: "",
   });
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +25,7 @@ const SignUp = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, role }),
       });
 
       const jsonRes = await res.json();
@@ -42,10 +43,13 @@ const SignUp = () => {
         return;
       }
 
-      localStorage.setItem("token", jsonRes.data.token);
-      localStorage.setItem("user", JSON.stringify(jsonRes.data.user));
-
-      navigate("/");
+      toast.success("🥳 Admin user created!", {
+        duration: 4000,
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
     } catch (error) {
       console.error(error);
       alert("Something went wrong!");
@@ -61,7 +65,7 @@ const SignUp = () => {
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <h2 className="text-3xl font-bold text-white mb-6 text-center">
-          Create Your Account
+          Add New User
         </h2>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
@@ -104,11 +108,23 @@ const SignUp = () => {
             )}
           </div>
 
+          <select
+            value={role}
+            onChange={(e) => setRole(e.target.value)}
+            className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </select>
+          {errors.role && (
+            <p className="text-red-500 text-sm mt-1">{errors.role}</p>
+          )}
+
           <button
             type="submit"
             className="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold py-3 rounded transition"
           >
-            Sign Up
+            Add User
           </button>
         </form>
       </motion.div>
@@ -116,4 +132,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default AddUser;

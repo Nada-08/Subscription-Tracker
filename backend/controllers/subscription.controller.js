@@ -67,7 +67,7 @@ export const updateSubscription = async (req, res, next) => {
     }
 
     Object.assign(subscription, req.body);
-    const updatedSubscription =  await subscription.save(); 
+    const updatedSubscription = await subscription.save();
 
     if (req.body.renewalDate || req.body.frequency) {
       await workflowClient.trigger({
@@ -159,6 +159,48 @@ export const getUpcomingRenewals = async (req, res, next) => {
 
     const subscriptions = await Subscription.find(query);
 
+    res.status(200).json({ success: true, data: subscriptions });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getFilteredUserSubscriptions = async (req, res, next) => {
+  const user = req.user.id;
+
+  if (req.user.id != req.params.id && req.user.role != "admin") {
+    const error = new Error("You are not the owner of this account");
+    error.status = 401;
+    throw error;
+  }
+
+  const { category, minCost, maxCost, frequency, upcomingIn } = req.query;
+
+  const query = { user };
+
+  if (category) {
+    query.category = category;
+  }
+
+  if (minCost || maxCost) {
+    query.price = {};
+    if (minCost) query.price.$gte = Number(minCost);
+    if (maxCost) query.price.$lte = Number(maxCost);
+  }
+
+  if (frequency) {
+    query.frequency = frequency;
+  }
+
+  if (upcomingIn) {
+    const now = new Date();
+    const limit = new Date();
+    limit.setDate(now.getDate() + Number(upcomingIn));
+    query.renewalDate = { $lte: limit };
+  }
+
+  try {
+    const subscriptions = await Subscription.find(query);
     res.status(200).json({ success: true, data: subscriptions });
   } catch (error) {
     next(error);

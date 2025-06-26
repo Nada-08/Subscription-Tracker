@@ -5,10 +5,17 @@ import { useNavigate } from "react-router-dom";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+  });
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setErrors({ email: "", password: "" });
 
     try {
       const res = await fetch("http://localhost:5500/api/v1/auth/sign-in", {
@@ -22,13 +29,21 @@ const SignIn = () => {
       const jsonRes = await res.json();
 
       if (!res.ok) {
-        alert(jsonRes.message || "Sign in failed");
+        if (jsonRes.errors) {
+          const newErrors = { email: "", password: "" };
+          Object.keys(jsonRes.errors).forEach((field) => {
+            newErrors[field] = jsonRes.errors[field];
+          });
+          setErrors(newErrors);
+        } else {
+          alert(jsonRes.message || "Sign in failed");
+        }
         return;
       }
 
       localStorage.setItem("token", jsonRes.data.token);
       localStorage.setItem("user", JSON.stringify(jsonRes.data.user));
-      
+
       navigate("/dashboard");
     } catch (error) {
       console.error(error);
@@ -49,21 +64,31 @@ const SignIn = () => {
         </h2>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-indigo-500"
-          />
+          <div>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-indigo-500"
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email}</p>
+            )}
+          </div>
 
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-            className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-indigo-500"
-          />
+          <div>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              className="w-full p-3 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-indigo-500"
+            />
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password}</p>
+            )}
+          </div>
 
           <button
             type="submit"
