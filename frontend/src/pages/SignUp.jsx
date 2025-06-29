@@ -26,6 +26,7 @@ const SignUp = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ name, email, password }),
+        credentials: "include"
       });
 
       const jsonRes = await res.json();

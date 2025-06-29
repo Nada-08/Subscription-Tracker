@@ -6,7 +6,6 @@ import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.routes.js";
 import subscriptionRouter from "./routes/subscription.routes.js";
 import connectToDatabase from "./database/mongodb.js";
-// import connectToPostgres from './database/postgres.js';
 import cors from "cors";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import cookieParser from "cookie-parser";
@@ -22,7 +21,7 @@ app.use(
       "http://localhost:3000",
       "https://subscription-tracker-gules.vercel.app",
     ],
-    credentials: true, 
+    credentials: "include",
   })
 );
 

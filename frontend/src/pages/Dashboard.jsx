@@ -32,6 +32,7 @@ const Dashboard = () => {
             headers: {
               Authorization: `Bearer ${token}`,
             },
+            credentials: "include"
           }
         );
         setSubscriptions(res.data.data || []);

@@ -21,6 +21,7 @@ const DeleteSubscription = ({ subscriptionId, onDelete }) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          credentials: "include"
         }
       );
 

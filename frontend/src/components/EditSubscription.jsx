@@ -91,6 +91,7 @@ const EditSubscription = ({ subscription, onClose, onUpdate }) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          credentials: "include"
         }
       );
 

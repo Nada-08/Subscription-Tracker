@@ -4,7 +4,6 @@ import axios from "axios";
 import API_URL from "../../api";
 
 const AddSubscription = ({ onClose, onAdd }) => {
-  
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -63,15 +62,12 @@ const AddSubscription = ({ onClose, onAdd }) => {
         price: parseFloat(formData.price),
       };
 
-      const res = await axios.post(
-        `${API_URL}/api/v1/subscriptions`,
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await axios.post(`${API_URL}/api/v1/subscriptions`, payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      });
       if (res.status == 201) {
         onAdd(res.data.data);
         onClose();

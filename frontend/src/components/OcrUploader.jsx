@@ -27,6 +27,7 @@ const OcrUploader = ({ onSuccess }) => {
             "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
+          credentials: "include"
         }
       );
 
