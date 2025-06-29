@@ -21,7 +21,7 @@ app.use(
       "http://localhost:3000",
       "https://subscription-tracker-gules.vercel.app",
     ],
-    credentials: "include",
+    credentials: true,
   })
 );
 
