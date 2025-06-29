@@ -66,3 +66,5 @@ backend/database/schema.sql
 backend/database/init.js
 
 backend/.dummay data.txt
+
+flask-ocr/.env

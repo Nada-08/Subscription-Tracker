@@ -5,6 +5,7 @@ import SubscriptionCard from "../components/SubscriptionCard";
 import AddSubscription from "../components/AddSubscription";
 import FilterBar from "../components/FilterBar";
 import SubscriptionChart from "../components/SubscriptionChart";
+import OcrUploader from "../components/OcrUploader";
 
 const Dashboard = () => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -125,9 +126,11 @@ const Dashboard = () => {
         </div>
       </div>
 
+      <OcrUploader onSuccess={handleAdd} />
+
       <FilterBar onFilter={fetchFilteredSubscriptions} />
 
-      <SubscriptionChart data={chartData}/>
+      <SubscriptionChart data={chartData} />
 
       <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4">
         {filteredSubscriptions.length > 0 ? (
