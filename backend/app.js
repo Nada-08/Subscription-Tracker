@@ -18,7 +18,11 @@ const app = express(); // creating an express app instance - actual web server
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://subscription-tracker-gules.vercel.app"],
+    origin: [
+      "http://localhost:3000",
+      "https://subscription-tracker-gules.vercel.app",
+    ],
+    credentials: true, 
   })
 );
 
