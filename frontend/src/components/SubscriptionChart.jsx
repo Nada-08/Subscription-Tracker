@@ -94,9 +94,6 @@ const SubscriptionChart = ({ data }) => {
             </Pie>
             <Tooltip />
             <Legend />
-
-            <Tooltip />
-            <Legend />
           </PieChart>
         )}
       </ResponsiveContainer>

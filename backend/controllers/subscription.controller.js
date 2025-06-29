@@ -1,5 +1,5 @@
 import { workflowClient } from "../config/upstash.js";
-import { SERVER_URL } from "../config/env.js";
+// import { SERVER_URL } from "../config/env.js";
 import Subscription from "../models/subscription.model.js";
 
 // for admins only
@@ -38,7 +38,7 @@ export const createSubscription = async (req, res, next) => {
     });
 
     const { workflowRunId } = await workflowClient.trigger({
-      url: `${SERVER_URL}/api/v1/workflows/subscription/reminder`,
+      url: `https://subscription-tracker-production-c826.up.railway.app/api/v1/workflows/subscription/reminder`,
       method: "POST",
       body: {
         subscriptionId: subscription._id,
@@ -72,7 +72,7 @@ export const updateSubscription = async (req, res, next) => {
 
     if (req.body.renewalDate || req.body.frequency) {
       await workflowClient.trigger({
-        url: `${SERVER_URL}/api/v1/workflows/subscription/reminder`,
+        url: `https://subscription-tracker-production-c826.up.railway.app/api/v1/workflows/subscription/reminder`,
         method: "POST",
         body: {
           subscriptionId: subscription._id,
