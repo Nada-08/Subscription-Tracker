@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import API_URL from "../../api";
 
 const EditSubscription = ({ subscription, onClose, onUpdate }) => {
   const formatDateForInput = (date) => {
@@ -84,7 +85,7 @@ const EditSubscription = ({ subscription, onClose, onUpdate }) => {
       }
 
       const res = await axios.put(
-        `http://localhost:5500/api/v1/subscriptions/${subscription._id}`,
+        `${API_URL}/api/v1/subscriptions/${subscription._id}`,
         payload,
         {
           headers: {

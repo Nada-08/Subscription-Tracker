@@ -23,7 +23,7 @@ app.use(
 );
 
 app.use(express.json()); // handle json data sent in request
-app.use(express.urlencoded({ extend: false })); // process the form data sent via HTML forms in simple format
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(arcjetMiddleware);
 

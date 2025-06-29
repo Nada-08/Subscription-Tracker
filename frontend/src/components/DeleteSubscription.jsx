@@ -2,8 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import ConfirmDialog from "./ConfirmDialog";
 import { TrashIcon } from "@heroicons/react/24/outline";
-
 import Spinner from "./Spinner";
+import API_URL from "../../api";
 
 const DeleteSubscription = ({ subscriptionId, onDelete }) => {
   const [showConfirm, setShowConfirm] = useState(false);
@@ -16,7 +16,7 @@ const DeleteSubscription = ({ subscriptionId, onDelete }) => {
 
       const token = localStorage.getItem("token");
       await axios.delete(
-        `http://localhost:5500/api/v1/subscriptions/${subscriptionId}`,
+        `${API_URL}/api/v1/subscriptions/${subscriptionId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

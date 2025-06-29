@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ConfirmDialog from "../components/ConfirmDialog";
+import API_URL from "../../api";
 
 const AllUsers = () => {
   const [users, setUsers] = useState([]);
@@ -11,7 +12,7 @@ const AllUsers = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch("http://localhost:5500/api/v1/users", {
+        const res = await fetch(`${API_URL}/api/v1/users`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

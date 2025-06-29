@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../../api";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ const SignIn = () => {
     setErrors({ email: "", password: "" });
 
     try {
-      const res = await fetch("http://localhost:5500/api/v1/auth/sign-in", {
+      const res = await fetch(`${API_URL}/api/v1/auth/sign-in`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

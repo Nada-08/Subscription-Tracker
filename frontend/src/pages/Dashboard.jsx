@@ -6,6 +6,7 @@ import AddSubscription from "../components/AddSubscription";
 import FilterBar from "../components/FilterBar";
 import SubscriptionChart from "../components/SubscriptionChart";
 import OcrUploader from "../components/OcrUploader";
+import API_URL from "../../api";
 
 const Dashboard = () => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -26,7 +27,7 @@ const Dashboard = () => {
     const fetchSubscriptions = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5500/api/v1/subscriptions/user/${parsedUser._id}`,
+          `${API_URL}/api/v1/subscriptions/user/${parsedUser._id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
+import API_URL from "../../api";
 
 const AddSubscription = ({ onClose, onAdd }) => {
+  
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -62,7 +64,7 @@ const AddSubscription = ({ onClose, onAdd }) => {
       };
 
       const res = await axios.post(
-        `http://localhost:5500/api/v1/subscriptions`,
+        `${API_URL}/api/v1/subscriptions`,
         payload,
         {
           headers: {

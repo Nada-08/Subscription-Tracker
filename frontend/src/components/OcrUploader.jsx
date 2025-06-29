@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import Spinner from "./Spinner";
+import API_URL from "../../api";
 
 const OcrUploader = ({ onSuccess }) => {
   const [file, setFile] = useState(null);
@@ -19,7 +20,7 @@ const OcrUploader = ({ onSuccess }) => {
 
       const token = localStorage.getItem("token");
       const res = await axios.post(
-        "http://localhost:5500/api/v1/ocr",
+        `${API_URL}/api/v1/ocr`,
         formData,
         {
           headers: {
