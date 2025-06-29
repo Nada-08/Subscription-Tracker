@@ -64,7 +64,7 @@ const OcrUploader = ({ onSuccess }) => {
       <button
         onClick={handleUpload}
         disabled={loading}
-        className={`bg-amber-400 text-black px-4 py-2 rounded ${
+        className={`bg-amber-400 text-white px-4 py-2 rounded ${
           loading ? "cursor-not-allowed opacity-70" : "hover:bg-amber-500"
         }`}
       >

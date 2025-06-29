@@ -36,7 +36,7 @@ const SubscriptionChart = ({ data }) => {
           onClick={() => setChartType("bar")}
           className={`px-3 py-1 rounded-md text-sm font-medium transition ${
             chartType === "bar"
-              ? "bg-amber-400 text-black"
+              ? "bg-amber-400 text-white"
               : "bg-white text-black hover:bg-gray-200"
           }`}
         >
@@ -46,7 +46,7 @@ const SubscriptionChart = ({ data }) => {
           onClick={() => setChartType(() => setChartType("pie"))}
           className={`px-3 py-1 rounded-md text-sm font-medium transition ${
             chartType === "pie"
-              ? "bg-amber-400 text-black"
+              ? "bg-amber-400 text-white"
               : "bg-white text-black hover:bg-gray-200"
           }`}
         >
