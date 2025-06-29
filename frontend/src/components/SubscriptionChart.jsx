@@ -43,7 +43,7 @@ const SubscriptionChart = ({ data }) => {
           Bar Chart
         </button>
         <button
-          onClick={() => setChartType(() => setChartType("pie"))}
+          onClick={() => setChartType("pie")}
           className={`px-3 py-1 rounded-md text-sm font-medium transition ${
             chartType === "pie"
               ? "bg-amber-400 text-white"

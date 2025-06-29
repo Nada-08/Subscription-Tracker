@@ -6,12 +6,12 @@ A full-stack web app that helps users track, manage, and analyze their subscript
 
 ## 🚀 Features
 
-* 🧾 Add, edit, and delete subscriptions
-* 🗕️ Set renewal dates and get notified
-* 📊 Visualize spending by category using bar or pie charts
-* 🔍 Smart OCR upload to auto-fill subscription info
-* 🧠 LLM-based parsing for scanned receipts
-* 🌐 Built with React, Express, MongoDB, Upstash Redis
+* 🧾 Add, edit, and delete subscriptions  
+* 🗕️ Set renewal dates and get notified with automated email reminders  
+* 📊 Visualize spending by category using bar or pie charts  
+* 🔍 Smart OCR upload to auto-fill subscription info  
+* 🧠 LLM-based parsing for scanned receipts  
+* 🌐 Built with React, Express, MongoDB  
 
 ---
 
@@ -19,13 +19,13 @@ A full-stack web app that helps users track, manage, and analyze their subscript
 
 | Frontend | Backend           | Database | AI/ML APIs             | Deployment     |
 | -------- | ----------------- | -------- | ---------------------- | -------------- |
-| React    | Node.js + Express | MongoDB  | OCR Space, Together.ai | Vercel, Render |
+| React    | Node.js + Express | MongoDB  | OCR Space, Together.ai | Vercel, Railway |
 
 ---
 
 ## 🪙 Deployment
 
-The project can be deployed on platforms like Vercel (frontend) and Render (backend). Environment variables must be set accordingly in each deployment dashboard.
+The project can be deployed on platforms like Vercel (frontend) and Railway (backend). Environment variables must be set accordingly in each deployment dashboard.
 
 ---
 
