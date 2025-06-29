@@ -19,6 +19,8 @@ const SignIn = () => {
     setErrors({ email: "", password: "" });
 
     try {
+      console.log("API_URL:", API_URL);
+
       const res = await fetch(`${API_URL}/api/v1/auth/sign-in`, {
         method: "POST",
         headers: {
